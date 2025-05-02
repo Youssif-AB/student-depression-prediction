@@ -2,7 +2,7 @@
 
 This project analyzes a dataset on student mental health to identify key factors correlated with depression and build a predictive machine learning model.
 
-## 📊 Project Overview
+## Project Overview
 
 - **Dataset:** [Student Depression Dataset](https://www.kaggle.com/datasets/adilshamim8/student-depression-dataset)
 - **Goal:** Understand which academic and lifestyle factors correlate with depression, and build a classifier to predict depression risk.
