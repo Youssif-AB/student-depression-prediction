@@ -12,7 +12,7 @@ This project analyzes a dataset on student mental health to identify key factors
 ## Techniques Used
 
 - Data cleaning and preprocessing (handling missing values, encoding, filtering)
-- Exploratory Data Analysis (EDA) using boxplots, group-by stats, and correlation heatmaps
+- Exploratory Data Analysis (EDA)
 - Feature engineering and encoding
 - Machine Learning with Scikit-learn
 - Model evaluation with precision, recall, F1-score, and confusion matrix
@@ -42,5 +42,5 @@ This project analyzes a dataset on student mental health to identify key factors
 
 1. Clone this repository  
 2. Open the Jupyter notebook  
-3. Run cells in order (requires pandas, seaborn, scikit-learn, matplotlib)
+3. Run cells in order
 
