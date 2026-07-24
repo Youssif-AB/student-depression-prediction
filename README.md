@@ -40,7 +40,43 @@ This project analyzes a dataset on student mental health to identify key factors
 
 ## How to Run
 
-1. Clone this repository  
-2. Open the Jupyter notebook  
-3. Run cells in order
+### 1. Clone the repository
 
+```bash
+git clone https://github.com/Youssif-AB/student-depression-prediction.git
+cd student-depression-prediction
+```
+
+### 2. Create a virtual environment
+
+```bash
+python -m venv venv
+```
+
+Activate it on Windows:
+
+```bash
+venv\Scripts\activate
+```
+
+Activate it on macOS or Linux:
+
+```bash
+source venv/bin/activate
+```
+
+### 3. Install the required packages
+
+```bash
+pip install pandas numpy matplotlib seaborn scikit-learn jupyter
+```
+
+### 4. Start Jupyter Notebook
+
+```bash
+jupyter notebook
+```
+
+Open `student_depression_analysis.ipynb` and run the cells in order.
+
+Make sure `student_depression.csv` is in the same folder as the notebook.
