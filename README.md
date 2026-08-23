@@ -1,82 +1,47 @@
 # Student Depression Analysis & Prediction
 
-This project analyzes a dataset on student mental health to identify key factors correlated with depression and build a predictive machine learning model.
+This project explores academic, lifestyle, and demographic factors associated with the `Depression` label and trains a classifier using the workflow developed in the notebook.
 
-## Project Overview
+## Dataset
 
-- **Dataset:** [Student Depression Dataset](https://www.kaggle.com/datasets/adilshamim8/student-depression-dataset)
-- **Goal:** Understand which academic and lifestyle factors correlate with depression, and build a classifier to predict depression risk.
-- **Final Model:** Random Forest Classifier
-- **Accuracy:** ~84%
+The included `student_depression_dataset.csv` is the [Student Depression Dataset on Kaggle](https://www.kaggle.com/datasets/adilshamim8/student-depression-dataset). It contains self-reported or survey-style student attributes including academic pressure, study satisfaction, sleep duration, dietary habits, financial stress, family mental-illness history, and prior suicidal thoughts. The binary `Depression` column is the prediction target.
 
-## Techniques Used
+The dataset is observational and its provenance, sampling process, label construction, and representativeness are not established in this repository. The model can reproduce biases and data-quality problems in the dataset. Its held-out performance is specific to one split of this data and has not been externally validated. Because it uses sensitive mental-health information, including prior suicidal thoughts, it must not be treated as a diagnosis, used for clinical decisions, or deployed to make decisions about individuals.
 
-- Data cleaning and preprocessing (handling missing values, encoding, filtering)
-- Exploratory Data Analysis (EDA)
-- Feature engineering and encoding
-- Machine Learning with Scikit-learn
-- Model evaluation with precision, recall, F1-score, and confusion matrix
+## Existing Methodology
 
-## Key Insights - Selective Data Points
+The notebook drops `id`, `City`, and `Work Pressure`; retains student records; removes unsupported categorical values; maps binary fields; ordinal-encodes dietary habits and sleep duration; and one-hot-encodes degree with the first level dropped. It uses an 80/20 stratified train/test split with random state 42 and trains one candidate: `RandomForestClassifier(random_state=42)` with otherwise default parameters.
 
-- **Sleep Duration**: Shorter sleep is generally associated with higher depression, up to a certain point, at which the same effects arent seen.
-- **Academic Pressure**: Strong positive correlation with depression.
-- **CGPA**: No clear linear trend with depression, seemingly noise.
-- **Degree Type**: 'Class 12' students showed significantly higher depression risk than university students.
+The existing evaluation reports mean absolute error, a confusion matrix, and classification precision, recall, F1, and accuracy. No additional candidate or tuning methodology is introduced by the tracked workflow.
 
-## ML Model
+## MLflow Training
 
-- Model: Random Forest Classifier  
-- Evaluation:  
-  - Precision (Depressed): 0.86  
-  - Recall (Depressed): 0.87  
-  - F1-score (Depressed): 0.86  
-  - Overall Accuracy: 84%
+Create and activate a virtual environment, then install the dependencies:
+
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+Run the tracked workflow:
+
+```bash
+python train.py
+```
+
+`MLFLOW_TRACKING_URI` defaults to `http://localhost:5000` and can be overridden:
+
+```powershell
+$env:MLFLOW_TRACKING_URI = "http://another-mlflow-host:5000"
+python train.py
+```
+
+The script logs the real estimator parameters and held-out metrics to the `student-wellness-prediction` experiment, logs the trained scikit-learn model artifact, and registers it as `StudentWellnessPrediction`. It is independent of ModelControl source code and communicates only through the standard MLflow tracking API.
 
 ## Files
 
-- `student_depression_analysis.ipynb` – Full notebook with data cleaning, EDA, and modeling
-- `student_depression.csv` – Dataset used (or link to Kaggle if not included)
-
-## How to Run
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/Youssif-AB/student-depression-prediction.git
-cd student-depression-prediction
-```
-
-### 2. Create a virtual environment
-
-```bash
-python -m venv venv
-```
-
-Activate it on Windows:
-
-```bash
-venv\Scripts\activate
-```
-
-Activate it on macOS or Linux:
-
-```bash
-source venv/bin/activate
-```
-
-### 3. Install the required packages
-
-```bash
-pip install pandas numpy matplotlib seaborn scikit-learn jupyter
-```
-
-### 4. Start Jupyter Notebook
-
-```bash
-jupyter notebook
-```
-
-Open `student_depression_analysis.ipynb` and run the cells in order.
-
-Make sure `student_depression.csv` is in the same folder as the notebook.
+- `student-depression-prediction.ipynb`: exploratory analysis and original modeling workflow
+- `student_depression_dataset.csv`: dataset used by the notebook and training script
+- `train.py`: reproducible MLflow-tracked version of the existing training/evaluation workflow
+- `requirements.txt`: runtime dependencies
